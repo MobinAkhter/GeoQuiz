@@ -15,6 +15,7 @@ public class Questions {
     }
 
     public void setTextResId(int textResId) {
+
         mTextResId = textResId;
     }
 
