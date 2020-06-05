@@ -2,6 +2,7 @@ package com.bignerdranch.com;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,11 +12,13 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String KEY_INDEX = "";
     // Field variable declaration below
     // Used m before the variable to indicate that these are member/instance variables.
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
+    private Button mCheatButton;
     private TextView mQuestionTextView;
 
     private static final String TAG = "MainActivity";
@@ -96,6 +99,20 @@ public class MainActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
+        mCheatButton = (Button)findViewById(R.id.cheat_button);
+        mCheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start CheatActivity
+                boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+                Intent i = CheatActivity.newIntent(MainActivity.this, answerIsTrue);
+                startActivity(i);
+            }
+        });
+        if (savedInstanceState !=null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
+
         updateQuestion();
     }
 
